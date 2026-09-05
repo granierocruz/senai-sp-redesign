@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
+import path from "path";
 
 // Carrega variáveis de ambiente se disponíveis
 dotenv.config();
@@ -199,6 +200,11 @@ app.get("/api/courses", (req, res) => {
 // Health check para Vercel
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+// Servir frontend index.html na rota raiz e fallbacks
+app.get("/", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "index.html"));
 });
 
 export default app;
