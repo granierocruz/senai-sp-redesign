@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import path from "path";
+import { htmlContent } from "./htmlContent.mjs";
 
 // Carrega variáveis de ambiente se disponíveis
 dotenv.config();
@@ -202,9 +203,24 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Servir frontend index.html na rota raiz e fallbacks
+// Servir frontend SENAI-SP com conteúdo embutido (100% à prova de falha de filesystem)
 app.get("/", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "index.html"));
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  return res.send(htmlContent);
+});
+
+app.get("/index.html", (req, res) => {
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  return res.send(htmlContent);
+});
+
+// Middleware Fallback para SPA (qualquer rota não-API entrega o portal)
+app.use((req, res) => {
+  if (req.path.startsWith("/api/")) {
+    return res.status(404).json({ status: "error", message: "Rota de API não encontrada" });
+  }
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  return res.send(htmlContent);
 });
 
 export default app;
