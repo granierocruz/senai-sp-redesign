@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html class="scroll-smooth dark" lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>SENAI-SP | Redesign Moderno - Formação Profissional e Tecnologia Industrial</title>
+  <meta name="description" content="Redesign acadêmico moderno do portal oficial do SENAI-SP. Cursos técnicos, bolsas de estudo 100% gratuitas e inovação para a Indústria 4.0." />
+  
+  <!-- Cabeçalhos de Segurança HTTP e Content Security Policy (Regras 18 e 19) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://lh3.googleusercontent.com; connect-src 'self'; upgrade-insecure-requests;" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Favicon e Fontes do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN com Plugins Form & Container Queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "senai-red": "#e30613",
+            "senai-red-deep": "#C40510",
+            "senai-red-light": "#ff4d58",
+            "senai-dark-bg": "#0b0d11",
+            "senai-dark-surface": "#12161d",
+            "senai-dark-card": "#181d26",
+            "senai-dark-border": "#272f3d",
+            "senai-dark-hover": "#222a38",
+            "senai-gray-subtle": "#f4f6f8",
+            "senai-graphite-base": "#1d1d1b",
+            "senai-graphite-dark": "#22262a",
+            "senai-border": "#e2e5e9"
+          },
+          fontFamily: {
+            headline: ["Montserrat", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            code: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    @layer base {
+      html, body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+      }
+      body {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 16px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+    }
+    
+    /* Scrollbar minimalista e elegante */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(227, 6, 19, 0.6);
+    }
+    
+    .glass-nav {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+  </style>
+</head>
+
+<body class="bg-[#f8f9fb] dark:bg-senai-dark-bg text-[#1a1d20] dark:text-[#f0f3f6] min-h-screen flex flex-col antialiased selection:bg-senai-red selection:text-white">
+
+  <!-- ========================================================================= -->
+  <!-- BARRA DE AVISOS INSTITUCIONAIS TOPO -->
+  <!-- ========================================================================= -->
+  <aside class="bg-senai-graphite-dark text-white text-[12px] py-1.5 px-4 border-b border-white/10 hidden md:block">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5 font-medium text-gray-300">
+          <span class="material-symbols-outlined text-[15px] text-senai-red-light">apartment</span>
+          Federação das Indústrias do Estado de São Paulo (FIESP)
+        </span>
+        <span class="text-white/30">|</span>
+        <span class="text-gray-300">Processo Seletivo 2º Semestre 2025 Aberto</span>
+      </div>
+      <div class="flex items-center gap-5 text-gray-300">
+        <a href="#bolsas" class="hover:text-white transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px] text-amber-400">workspace_premium</span>
+          Gratuidade Regimental
+        </a>
+        <a href="#unidades" class="hover:text-white transition-colors">Encontre sua Escola</a>
+        <a href="#contato" class="hover:text-white transition-colors">Ouvidoria & SAC</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- HEADER NAVEGAÇÃO SUPERIOR -->
+  <!-- ========================================================================= -->
+  <header class="sticky top-0 w-full z-40 bg-white/95 dark:bg-senai-dark-surface/90 glass-nav border-b border-gray-200 dark:border-senai-dark-border shadow-[0_2px_15px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_25px_rgba(0,0,0,0.5)] pt-safe transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 py-2.5 flex items-center justify-between gap-4">
+      
+      <!-- LOGO INSTITUCIONAL COM LINK -->
+      <div class="flex items-center gap-6">
+        <a href="#" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-senai-red rounded-lg p-1" aria-label="SENAI-SP Página Inicial">
+          <div class="flex items-center gap-2">
+            <img 
+              src="https://lh3.googleusercontent.com/aida/AEtjO1WOXrmPW5uOgQS73etItm60f1X4QFkHGvGdLOQZRhKj_kvfsnKFWdxgnIN86tp8HzYPtnG18M3dea6bZaozqwudj53xcU4v80IktW_rAIP3Y_twnylNz3Kyod7LAkUDKnsgQVUPDef976TtZaWyt-5TNSn5Od6gc7a9bpWEo8CC5WFI2mGNvzw9qeJ-mqEBI4RDIZB2g7YdiYyxRHT_x3QJYaNDAs99V4Jcp6yhhpxF2G0aJS3X29d4WnPn" 
+              alt="Logotipo Oficial SENAI-SP" 
+              class="h-8 md:h-9 w-auto object-contain dark:brightness-110 group-hover:opacity-90 transition-opacity"
+            />
+            <div class="h-6 w-[1.5px] bg-gray-300 dark:bg-senai-dark-border mx-1 hidden sm:block"></div>
+            <div class="hidden sm:flex flex-col">
+              <span class="font-headline font-bold text-[14px] text-gray-900 dark:text-white tracking-tight leading-tight">São Paulo</span>
+              <span class="font-code text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Inovação Fabril</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- NAVEGAÇÃO DESKTOP -->
+        <nav class="hidden lg:flex items-center gap-1 font-medium text-[14px]">
+          <a href="#cursos" class="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:text-senai-red dark:hover:text-white hover:bg-gray-100 dark:hover:bg-senai-dark-hover transition-all">Cursos & Especializações</a>
+          <a href="#bolsas" class="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:text-senai-red dark:hover:text-white hover:bg-gray-100 dark:hover:bg-senai-dark-hover transition-all flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-senai-red animate-pulse"></span>
+            Bolsas 100%
+          </a>
+          <a href="#diferenciais" class="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:text-senai-red dark:hover:text-white hover:bg-gray-100 dark:hover:bg-senai-dark-hover transition-all">Laboratórios 4.0</a>
+          <a href="#unidades" class="px-3 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:text-senai-red dark:hover:text-white hover:bg-gray-100 dark:hover:bg-senai-dark-hover transition-all">Unidades SP</a>
+        </nav>
+      </div>
+
+      <!-- AÇÕES DE TOPO: TOGGLE TEMA + PORTAL DO ALUNO -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        
+        <!-- THEME TOGGLE BUTTON -->
+        <button 
+          id="theme-toggle" 
+          type="button" 
+          class="w-10 h-10 rounded-xl flex items-center justify-center bg-gray-100 hover:bg-gray-200 dark:bg-senai-dark-card dark:hover:bg-senai-dark-hover border border-gray-200 dark:border-senai-dark-border text-amber-500 dark:text-amber-400 shadow-sm transition-all duration-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-senai-red" 
+          aria-label="Alternar tema claro e escuro" 
+          title="Alternar entre tema claro e escuro"
+        >
+          <span class="material-symbols-outlined text-[20px] transition-transform duration-300" id="theme-icon">light_mode</span>
+        </button>
+
+        <!-- PORTAL DO ALUNO CTA BUTTON (DISPARA MODAL) -->
+        <button 
+          id="open-portal-btn" 
+          type="button" 
+          class="flex items-center gap-2 h-10 px-4 rounded-xl bg-senai-red hover:bg-senai-red-deep text-white font-headline text-[13px] font-bold tracking-wide transition-all shadow-md shadow-red-950/20 active:scale-95 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-senai-red"
+        >
+          <span class="material-symbols-outlined text-[19px]">school</span>
+          <span>Portal do Aluno</span>
+        </button>
+
+        <!-- MENU MOBILE TOGGLE -->
+        <button 
+          id="mobile-menu-btn" 
+          type="button" 
+          class="lg:hidden w-10 h-10 rounded-xl bg-gray-100 dark:bg-senai-dark-card text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-senai-dark-border flex items-center justify-center active:scale-95 transition-all"
+          aria-label="Abrir menu"
+        >
+          <span class="material-symbols-outlined text-[22px]" id="menu-icon">menu</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- MENU DROPDOWN MOBILE EXPANSÍVEL -->
+    <div id="mobile-menu-dropdown" class="hidden lg:hidden border-t border-gray-200 dark:border-senai-dark-border bg-white dark:bg-senai-dark-surface px-4 py-3 space-y-2">
+      <a href="#cursos" class="block px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-senai-dark-card font-medium">Cursos & Especializações</a>
+      <a href="#bolsas" class="block px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-senai-dark-card font-medium">Bolsas de Estudo 100%</a>
+      <a href="#diferenciais" class="block px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-senai-dark-card font-medium">Laboratórios & Tecnologia</a>
+      <a href="#unidades" class="block px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-senai-dark-card font-medium">Unidades no Estado de SP</a>
+      <button onclick="openPortalModal()" class="w-full mt-2 flex items-center justify-center gap-2 h-10 rounded-xl bg-senai-red text-white font-headline text-[13px] font-bold">
+        <span class="material-symbols-outlined text-[19px]">account_circle</span>
+        Acessar Área Restrita do Aluno
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- CONTEÚDO PRINCIPAL -->
+  <!-- ========================================================================= -->
+  <main class="flex-grow flex flex-col relative w-full">
+
+    <!-- HERO SECTION MODERNA COM IMAGEM HIGH-TECH E GRADIENTE INDUSTRIAL -->
+    <section class="relative w-full overflow-hidden bg-[#121418] text-white min-h-[500px] md:min-h-[580px] flex flex-col justify-center">
+      <!-- Imagem de Fundo de Alta Definição extraída do Stitch -->
+      <div class="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-1000 scale-105 hover:scale-100" 
+           style="background-image: url('https://lh3.googleusercontent.com/aida/AEtjO1WMfEoy2g_e4OVseavZhueyuTmCJiB5APLvfTHv0cYHufNmtXCl8xglz3TcZtCv3yyph4XXGW2TxymeIYpDMvTZBNqv0PZf_2BL5AUT5sUPpI_1Q51m2QuJq3uAnyYQvFhfscilRasPII8Siu3Yn1S-A3K7HyAlz7ae_XbKy5tbBQLsoMIN8SDxTcH7BdBVDjbQwQuQCg_3gRRJjp-y0ZMOW5pkQViV1k5JY34gB8U5mA-m-W6cf7yez2-U');">
+      </div>
+      
+      <!-- Efeitos de Iluminação, Vinheta e Gradientes High-Contrast -->
+      <div class="absolute inset-0 z-0 bg-gradient-to-t from-senai-dark-bg via-senai-dark-bg/85 to-transparent"></div>
+      <div class="absolute inset-0 z-0 bg-gradient-to-r from-senai-dark-bg/95 via-senai-dark-bg/75 to-transparent"></div>
+
+      <!-- Conteúdo do Hero -->
+      <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-14 md:py-20 w-full flex flex-col gap-6">
+        
+        <!-- Badge Inscrições 2025 -->
+        <div class="inline-flex items-center gap-2.5 self-start px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-lg">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-senai-red opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-senai-red"></span>
+          </span>
+          <span class="font-headline text-[12px] font-bold text-white uppercase tracking-wider">Inscrições Abertas • Processo 2025/2026</span>
+        </div>
+
+        <!-- Título Principal e Subtítulo -->
+        <div class="flex flex-col gap-3 max-w-2xl">
+          <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            Transforme seu Futuro na <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-senai-red-light to-amber-400">Indústria 4.0</span>
+          </h1>
+          <p class="font-body text-base md:text-lg text-gray-300 leading-relaxed">
+            Domine robótica inteligente, inteligência artificial fabril, mecatrônica avançada e engenharia de software em centros laboratoriais com a chancela das maiores empresas globais.
+          </p>
+        </div>
+
+        <!-- Barra de Busca Interativa Rápida de Cursos -->
+        <div class="w-full max-w-xl flex flex-col sm:flex-row gap-3 pt-2">
+          <div class="relative flex-grow">
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-[22px]">search</span>
+            <input 
+              id="hero-search-input" 
+              type="text" 
+              placeholder="Ex: Robótica, TI, Automação, Mecatrônica..." 
+              class="w-full h-12 pl-12 pr-4 rounded-xl bg-senai-dark-card/90 backdrop-blur-md text-white font-body text-[14px] placeholder:text-gray-400 border border-senai-dark-border shadow-xl focus:outline-none focus:ring-2 focus:ring-senai-red transition-all"
+            />
+          </div>
+          <a 
+            href="#cursos" 
+            class="flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-senai-red hover:bg-senai-red-deep text-white font-headline text-[14px] font-bold shadow-lg shadow-red-900/40 active:scale-95 transition-all"
+          >
+            <span>Buscar Cursos</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Ações Secundárias / Destaques -->
+        <div class="flex flex-wrap items-center gap-4 pt-1 text-sm text-gray-300">
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+            <span>Certificação Reconhecida Nacionalmente</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-amber-400 text-[18px]">verified</span>
+            <span>Opções Presenciais e EaD Flexíveis</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MÉTRICAS DE IMPACTO E KPIS INDUSTRIAIS (CARD ELEVADO) -->
+    <section class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 -mt-10 w-full">
+      <div class="bg-white dark:bg-senai-dark-card rounded-2xl shadow-xl shadow-gray-200/60 dark:shadow-black/60 border border-gray-200 dark:border-senai-dark-border p-5 md:p-6 transition-colors duration-300">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-senai-dark-border">
+          
+          <!-- KPI 1: Empregabilidade -->
+          <div class="flex items-center gap-4 pt-2 md:pt-0">
+            <div class="w-13 h-13 p-3 rounded-2xl bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-senai-red-light flex items-center justify-center shrink-0 border border-red-200 dark:border-red-900/40">
+              <span class="material-symbols-outlined text-[30px]">trending_up</span>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-headline text-3xl font-extrabold text-gray-900 dark:text-white">92,4%</span>
+                <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold">Líder SP</span>
+              </div>
+              <p class="text-[13px] text-gray-600 dark:text-gray-400 font-medium">Índice de empregabilidade dos alunos formados</p>
+            </div>
+          </div>
+
+          <!-- KPI 2: Infraestrutura -->
+          <div class="flex items-center gap-4 pt-4 md:pt-0 md:pl-6">
+            <div class="w-13 h-13 p-3 rounded-2xl bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-senai-red-light flex items-center justify-center shrink-0 border border-red-200 dark:border-red-900/40">
+              <span class="material-symbols-outlined text-[30px]">apartment</span>
+            </div>
+            <div>
+              <span class="font-headline text-3xl font-extrabold text-gray-900 dark:text-white">+150</span>
+              <p class="text-[13px] text-gray-600 dark:text-gray-400 font-medium">Unidades e centros tecnológicos no Estado de SP</p>
+            </div>
+          </div>
+
+          <!-- KPI 3: Gratuidades e Parcerias -->
+          <div class="flex items-center gap-4 pt-4 md:pt-0 md:pl-6">
+            <div class="w-13 h-13 p-3 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 border border-amber-200 dark:border-amber-900/40">
+              <span class="material-symbols-outlined text-[30px]">workspace_premium</span>
+            </div>
+            <div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-headline text-3xl font-extrabold text-gray-900 dark:text-white">100%</span>
+                <span class="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[11px] font-bold">Gratuidade</span>
+              </div>
+              <p class="text-[13px] text-gray-600 dark:text-gray-400 font-medium">Bolsas pelo programa de Gratuidade Regimental</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- ÁREA DE CURSOS E FORMAÇÃO TECNOLÓGICA (SEÇÃO PRINCIPAL) -->
+    <!-- ========================================================================= -->
+    <section id="cursos" class="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-12 w-full flex flex-col gap-8">
+      
+      <!-- Cabeçalho da Seção -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <span class="h-4 w-1.5 bg-senai-red rounded-full"></span>
+            <span class="font-headline text-[12px] text-senai-red dark:text-senai-red-light font-bold uppercase tracking-widest">Catálogo Oficial</span>
+          </div>
+          <h2 class="font-headline text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+            Cursos & Áreas Tecnológicas
+          </h2>
+          <p class="font-body text-[14px] md:text-[15px] text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
+            Formação profissional desenvolvida diretamente com a indústria para gerar empregabilidade real e liderança tecnológica.
+          </p>
+        </div>
+
+        <!-- Contador de Cursos Encontrados -->
+        <div class="text-sm text-gray-500 dark:text-gray-400 font-medium">
+          Exibindo <span id="course-count" class="font-bold text-senai-red dark:text-white">6</span> formações disponíveis
+        </div>
+      </div>
+
+      <!-- FILTROS POR CATEGORIA (CHIPS INTERATIVOS) -->
+      <div class="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+        <button 
+          onclick="filterCourses('todos', this)" 
+          class="course-filter-btn active px-4 py-2 rounded-xl bg-senai-red text-white font-headline text-[13px] font-semibold shrink-0 shadow-sm transition-all"
+        >
+          Todos os Cursos
+        </button>
+        <button 
+          onclick="filterCourses('tecnico', this)" 
+          class="course-filter-btn px-4 py-2 rounded-xl bg-white dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border text-gray-700 dark:text-gray-300 font-headline text-[13px] font-medium shrink-0 hover:border-senai-red hover:text-senai-red dark:hover:text-white transition-all"
+        >
+          Cursos Técnicos
+        </button>
+        <button 
+          onclick="filterCourses('ti', this)" 
+          class="course-filter-btn px-4 py-2 rounded-xl bg-white dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border text-gray-700 dark:text-gray-300 font-headline text-[13px] font-medium shrink-0 hover:border-senai-red hover:text-senai-red dark:hover:text-white transition-all"
+        >
+          TI & Software
+        </button>
+        <button 
+          onclick="filterCourses('robotica', this)" 
+          class="course-filter-btn px-4 py-2 rounded-xl bg-white dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border text-gray-700 dark:text-gray-300 font-headline text-[13px] font-medium shrink-0 hover:border-senai-red hover:text-senai-red dark:hover:text-white transition-all"
+        >
+          Robótica & Automação
+        </button>
+        <button 
+          onclick="filterCourses('energia', this)" 
+          class="course-filter-btn px-4 py-2 rounded-xl bg-white dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border text-gray-700 dark:text-gray-300 font-headline text-[13px] font-medium shrink-0 hover:border-senai-red hover:text-senai-red dark:hover:text-white transition-all"
+        >
+          Energias Renováveis
+        </button>
+        <button 
+          onclick="filterCourses('livres', this)" 
+          class="course-filter-btn px-4 py-2 rounded-xl bg-white dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border text-gray-700 dark:text-gray-300 font-headline text-[13px] font-medium shrink-0 hover:border-senai-red hover:text-senai-red dark:hover:text-white transition-all"
+        >
+          Qualificação Rápida
+        </button>
+      </div>
+
+      <!-- GRID DE CARDS DE CURSOS -->
+      <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- CARD 1: AUTOMAÇÃO E ROBÓTICA INDUSTRIAL -->
+        <article class="course-card bg-white dark:bg-senai-dark-card rounded-2xl p-5 shadow-sm hover:shadow-xl dark:shadow-md border border-gray-200/80 dark:border-senai-dark-border flex flex-col justify-between gap-4 relative overflow-hidden transition-all duration-300 hover:-translate-y-1" data-category="robotica tecnico" data-title="Automação e Robótica Industrial">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-senai-red to-red-400"></div>
+          
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-senai-red-light flex items-center justify-center border border-red-200 dark:border-red-900/40">
+                <span class="material-symbols-outlined text-[26px]">precision_manufacturing</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-red-400 font-headline text-[11px] font-bold border border-red-200 dark:border-red-900/40">Alta Demanda</span>
+            </div>
+
+            <div>
+              <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">
+                Automação e Robótica Industrial
+              </h3>
+              <p class="font-body text-[13px] text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
+                Programação de robôs colaborativos industriais, CLP, sensores IoT fabris, sistemas SCADA e integração ciberfísica de manufatura.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3.5 pt-3 border-t border-gray-100 dark:border-senai-dark-border/80">
+            <div class="flex flex-wrap gap-2 text-gray-700 dark:text-gray-300 font-code text-[11px]">
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Técnico (1.200h)</span>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Presencial Prático</span>
+            </div>
+            
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px]">school</span> Matrículas Abertas
+              </span>
+              <button 
+                onclick="showCourseModal('Automação e Robótica Industrial', '1.200 horas', 'Técnico Presencial', 'Desenvolva habilidades em programação de braços robóticos industriais KUKA/ABB, redes industriais Profinet/Modbus, controladores lógicos programáveis (CLP) e sistemas de visão computacional para controle de qualidade em linhas de montagem automotivas e aeroespaciais.', 'Ensino Médio concluído ou cursando o 2º ano.')" 
+                class="flex items-center gap-1 text-senai-red dark:text-senai-red-light hover:text-senai-red-deep font-headline text-[13px] font-bold group"
+              >
+                <span>Ver detalhes</span>
+                <span class="material-symbols-outlined text-[17px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 2: TECNOLOGIA DA INFORMAÇÃO & IA -->
+        <article class="course-card bg-white dark:bg-senai-dark-card rounded-2xl p-5 shadow-sm hover:shadow-xl dark:shadow-md border border-gray-200/80 dark:border-senai-dark-border flex flex-col justify-between gap-4 relative overflow-hidden transition-all duration-300 hover:-translate-y-1" data-category="ti tecnico" data-title="Desenvolvimento de Sistemas e Inteligência Artificial">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-indigo-500"></div>
+          
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-200 dark:border-blue-900/40">
+                <span class="material-symbols-outlined text-[26px]">terminal</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-headline text-[11px] font-bold border border-blue-200 dark:border-blue-900/40">Indústria 4.0</span>
+            </div>
+
+            <div>
+              <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">
+                Desenvolvimento de Sistemas & IA
+              </h3>
+              <p class="font-body text-[13px] text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
+                Desenvolvimento full-stack, cloud computing fabril, automação com Python, machine learning aplicado e cibersegurança industrial.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3.5 pt-3 border-t border-gray-100 dark:border-senai-dark-border/80">
+            <div class="flex flex-wrap gap-2 text-gray-700 dark:text-gray-300 font-code text-[11px]">
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Técnico (1.200h)</span>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Híbrido (Presencial + EaD)</span>
+            </div>
+            
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px]">school</span> Matrículas Abertas
+              </span>
+              <button 
+                onclick="showCourseModal('Desenvolvimento de Sistemas & IA', '1.200 horas', 'Técnico Híbrido', 'Formação completa em arquitetura de microsserviços, modelagem de banco de dados relacionais e NoSQL, integração de pipelines de Inteligência Artificial para análise preditiva fabril e boas práticas de DevOps.', 'Ensino Médio concluído ou cursando o 2º ano.')" 
+                class="flex items-center gap-1 text-senai-red dark:text-senai-red-light hover:text-senai-red-deep font-headline text-[13px] font-bold group"
+              >
+                <span>Ver detalhes</span>
+                <span class="material-symbols-outlined text-[17px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 3: MECATRÔNICA E MECÂNICA DE PRECISÃO -->
+        <article class="course-card bg-white dark:bg-senai-dark-card rounded-2xl p-5 shadow-sm hover:shadow-xl dark:shadow-md border border-gray-200/80 dark:border-senai-dark-border flex flex-col justify-between gap-4 relative overflow-hidden transition-all duration-300 hover:-translate-y-1" data-category="robotica tecnico" data-title="Mecânica de Precisão e Mecatrônica">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 to-amber-500"></div>
+          
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-senai-red-light flex items-center justify-center border border-red-200 dark:border-red-900/40">
+                <span class="material-symbols-outlined text-[26px]">settings_input_component</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-senai-dark-surface text-gray-700 dark:text-gray-300 font-headline text-[11px] font-bold border border-gray-200 dark:border-senai-dark-border">Certificação FIESP</span>
+            </div>
+
+            <div>
+              <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">
+                Mecânica de Precisão & Mecatrônica
+              </h3>
+              <p class="font-body text-[13px] text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
+                Manufatura aditiva, usinagem computadorizada CNC de 5 eixos, metrologia tridimensional e manutenção preditiva integrada.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3.5 pt-3 border-t border-gray-100 dark:border-senai-dark-border/80">
+            <div class="flex flex-wrap gap-2 text-gray-700 dark:text-gray-300 font-code text-[11px]">
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Técnico (1.500h)</span>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Oficinas Avançadas</span>
+            </div>
+            
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px]">school</span> Turmas Diurnas/Noturnas
+              </span>
+              <button 
+                onclick="showCourseModal('Mecânica de Precisão & Mecatrônica', '1.500 horas', 'Técnico Especializado', 'Habilitação técnica nos mais renomados tornos CNC, centros de usinagem multieixos, softwares CAD/CAM (SolidWorks, Inventor) e calibração de instrumentos de alta tolerância industrial.', 'Idade mínima de 16 anos e Ensino Médio em andamento.')" 
+                class="flex items-center gap-1 text-senai-red dark:text-senai-red-light hover:text-senai-red-deep font-headline text-[13px] font-bold group"
+              >
+                <span>Ver detalhes</span>
+                <span class="material-symbols-outlined text-[17px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 4: ENERGIAS RENOVÁVEIS E ELETROMOBILIDADE -->
+        <article class="course-card bg-white dark:bg-senai-dark-card rounded-2xl p-5 shadow-sm hover:shadow-xl dark:shadow-md border border-gray-200/80 dark:border-senai-dark-border flex flex-col justify-between gap-4 relative overflow-hidden transition-all duration-300 hover:-translate-y-1" data-category="energia tecnico" data-title="Energias Renováveis e Eletromobilidade">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+          
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-200 dark:border-emerald-900/40">
+                <span class="material-symbols-outlined text-[26px]">bolt</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 font-headline text-[11px] font-bold border border-emerald-200 dark:border-emerald-900/40">ESG Sustentável</span>
+            </div>
+
+            <div>
+              <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">
+                Energias Renováveis & Eletromobilidade
+              </h3>
+              <p class="font-body text-[13px] text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
+                Instalação e gestão de sistemas solares fotovoltaicos, manutenção de veículos elétricos e híbridos e redes elétricas inteligentes (smart grid).
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3.5 pt-3 border-t border-gray-100 dark:border-senai-dark-border/80">
+            <div class="flex flex-wrap gap-2 text-gray-700 dark:text-gray-300 font-code text-[11px]">
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Técnico (1.200h)</span>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Laboratório Solar</span>
+            </div>
+            
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px]">school</span> Matrículas Abertas
+              </span>
+              <button 
+                onclick="showCourseModal('Energias Renováveis & Eletromobilidade', '1.200 horas', 'Técnico Especializado', 'Capacitação prática em projetos fotovoltaicos on-grid e off-grid, segurança em alta tensão automotiva (NR-10 específica para carros elétricos) e eficiência em subestações elétricas modernas.', 'Ensino Médio concluído ou cursando o 2º ano.')" 
+                class="flex items-center gap-1 text-senai-red dark:text-senai-red-light hover:text-senai-red-deep font-headline text-[13px] font-bold group"
+              >
+                <span>Ver detalhes</span>
+                <span class="material-symbols-outlined text-[17px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 5: CIBERSEGURANÇA INDUSTRIAL E REDES OT -->
+        <article class="course-card bg-white dark:bg-senai-dark-card rounded-2xl p-5 shadow-sm hover:shadow-xl dark:shadow-md border border-gray-200/80 dark:border-senai-dark-border flex flex-col justify-between gap-4 relative overflow-hidden transition-all duration-300 hover:-translate-y-1" data-category="ti livres" data-title="Cibersegurança e Redes Industriais OT">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 to-indigo-600"></div>
+          
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center border border-purple-200 dark:border-purple-900/40">
+                <span class="material-symbols-outlined text-[26px]">security</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 font-headline text-[11px] font-bold border border-purple-200 dark:border-purple-900/40">Segurança Crítica</span>
+            </div>
+
+            <div>
+              <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">
+                Cibersegurança & Redes Industriais (OT)
+              </h3>
+              <p class="font-body text-[13px] text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
+                Proteção de infraestruturas críticas, prevenção de intrusões em redes SCADA fabris, conformidade com a IEC 62443 e resposta a incidentes.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3.5 pt-3 border-t border-gray-100 dark:border-senai-dark-border/80">
+            <div class="flex flex-wrap gap-2 text-gray-700 dark:text-gray-300 font-code text-[11px]">
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Aperfeiçoamento (240h)</span>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">100% Online com Prática</span>
+            </div>
+            
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-purple-600 dark:text-purple-400 font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px]">lock_open</span> Início Imediato
+              </span>
+              <button 
+                onclick="showCourseModal('Cibersegurança & Redes Industriais (OT)', '240 horas', 'Aperfeiçoamento Profissional', 'Análise de vulnerabilidades em sistemas de controle operacional, firewall industrial, criptografia e implementação da arquitetura Zero Trust em ambientes de chão de fábrica.', 'Conhecimentos prévios em redes e sistemas operacionais.')" 
+                class="flex items-center gap-1 text-senai-red dark:text-senai-red-light hover:text-senai-red-deep font-headline text-[13px] font-bold group"
+              >
+                <span>Ver detalhes</span>
+                <span class="material-symbols-outlined text-[17px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- CARD 6: MANUFATURA ADITIVA E IMPRESSÃO 3D INDUSTRIAL -->
+        <article class="course-card bg-white dark:bg-senai-dark-card rounded-2xl p-5 shadow-sm hover:shadow-xl dark:shadow-md border border-gray-200/80 dark:border-senai-dark-border flex flex-col justify-between gap-4 relative overflow-hidden transition-all duration-300 hover:-translate-y-1" data-category="livres robotica" data-title="Manufatura Aditiva e Prototipagem 3D">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
+          
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-200 dark:border-amber-900/40">
+                <span class="material-symbols-outlined text-[26px]">view_in_ar</span>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 font-headline text-[11px] font-bold border border-amber-200 dark:border-amber-900/40">FabLab SENAI</span>
+            </div>
+
+            <div>
+              <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">
+                Manufatura Aditiva & Prototipagem 3D
+              </h3>
+              <p class="font-body text-[13px] text-gray-600 dark:text-gray-400 mt-1.5 leading-relaxed">
+                Design generativo, escaneamento tridimensional a laser, impressão 3D em polímeros de engenharia e sinterização a laser em metal.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3.5 pt-3 border-t border-gray-100 dark:border-senai-dark-border/80">
+            <div class="flex flex-wrap gap-2 text-gray-700 dark:text-gray-300 font-code text-[11px]">
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Qualificação Rápida (160h)</span>
+              <span class="px-2.5 py-1 bg-gray-100 dark:bg-senai-dark-surface rounded-md border border-gray-200 dark:border-senai-dark-border">Prática em Laboratório</span>
+            </div>
+            
+            <div class="flex items-center justify-between pt-1">
+              <span class="text-xs text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1">
+                <span class="material-symbols-outlined text-[15px]">timer</span> Vagas Limitadas
+              </span>
+              <button 
+                onclick="showCourseModal('Manufatura Aditiva & Prototipagem 3D', '160 horas', 'Qualificação Rápida Presencial', 'Treinamento completo com impressoras industriais SLA, SLS e FDM para criação de gabaritos mecânicos, próteses e peças estruturais com otimização topológica.', 'Ensino Fundamental completo.')" 
+                class="flex items-center gap-1 text-senai-red dark:text-senai-red-light hover:text-senai-red-deep font-headline text-[13px] font-bold group"
+              >
+                <span>Ver detalhes</span>
+                <span class="material-symbols-outlined text-[17px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SEÇÃO ESPECIAL: BOLSAS DE ESTUDO 100% GRATUITAS -->
+    <!-- ========================================================================= -->
+    <section id="bolsas" class="max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full">
+      <div class="rounded-3xl bg-gradient-to-br from-[#b5000b] via-senai-red to-[#800006] text-white p-6 sm:p-10 shadow-2xl relative overflow-hidden border border-red-500/30">
+        
+        <!-- Elementos Gráficos de Fundo -->
+        <div class="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-white/10 blur-3xl pointer-events-none"></div>
+        <div class="absolute left-1/2 top-0 w-80 h-80 rounded-full bg-black/15 blur-3xl pointer-events-none"></div>
+        
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="flex flex-col gap-4 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 backdrop-blur-md self-start border border-white/20">
+              <span class="material-symbols-outlined text-[18px] text-amber-300">card_membership</span>
+              <span class="font-headline text-[11px] uppercase tracking-widest text-white font-bold">Gratuidade Regimental SENAI-SP</span>
+            </div>
+            
+            <h3 class="font-headline text-2xl sm:text-3xl lg:text-4xl font-black leading-tight text-white">
+              Bolsas de Estudo 100% Gratuitas
+            </h3>
+            
+            <p class="font-body text-[14px] sm:text-[15px] text-white/90 leading-relaxed">
+              O SENAI-SP disponibiliza milhares de vagas gratuitas em cursos técnicos, de aprendizagem industrial e qualificação básica para candidatos de baixa renda. Sem custo de inscrição, material didático ou mensalidades.
+            </p>
+
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-sm text-white/95">
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-amber-300 text-[18px]">check_circle</span>
+                <span>Cursos Técnicos Reconhecidos pelo MEC</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-amber-300 text-[18px]">check_circle</span>
+                <span>Material Didático Incluso Gratuitamente</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-amber-300 text-[18px]">check_circle</span>
+                <span>Acesso a Laboratórios de Alta Tecnologia</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-amber-300 text-[18px]">check_circle</span>
+                <span>Conexão Direta com Vagas na Indústria</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="flex flex-col gap-3 shrink-0">
+            <button 
+              onclick="alert('Redirecionando para o Sistema de Editais de Bolsas SENAI-SP 2025.')" 
+              class="inline-flex items-center justify-center gap-2.5 px-6 h-14 rounded-2xl bg-white text-senai-red font-headline text-[15px] font-bold shadow-xl hover:bg-gray-100 active:scale-95 transition-all"
+            >
+              <span>Consultar Editais de Bolsas</span>
+              <span class="material-symbols-outlined text-[20px]">open_in_new</span>
+            </button>
+            <span class="text-center text-[12px] text-white/80 font-medium">Inscrições online por ordem de classificação socioeconômica</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- DIFERENCIAIS DA FORMAÇÃO SENAI-SP (INFRAESTRUTURA 4.0) -->
+    <!-- ========================================================================= -->
+    <section id="diferenciais" class="max-w-7xl mx-auto px-4 sm:px-6 py-12 w-full">
+      <div class="flex flex-col gap-8">
+        
+        <div class="text-center max-w-2xl mx-auto flex flex-col gap-2">
+          <span class="font-headline text-[12px] text-senai-red dark:text-senai-red-light font-bold uppercase tracking-widest">Excelência Comprovada</span>
+          <h2 class="font-headline text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">
+            Por que Escolher o SENAI-SP?
+          </h2>
+          <p class="font-body text-sm text-gray-600 dark:text-gray-400">
+            Mais de 80 anos liderando o desenvolvimento humano e técnico que movimenta a indústria mais forte da América Latina.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div class="bg-white dark:bg-senai-dark-card rounded-2xl p-6 border border-gray-200/80 dark:border-senai-dark-border flex flex-col gap-3 shadow-sm hover:border-senai-red transition-all">
+            <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-senai-red-light flex items-center justify-center border border-red-200 dark:border-red-900/40">
+              <span class="material-symbols-outlined text-[26px]">devices_fold</span>
+            </div>
+            <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">Laboratórios Homologados</h3>
+            <p class="text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed">
+              Equipamentos de automação, tornos e braços robóticos idênticos aos operados nas linhas fabris das maiores montadoras mundiais.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-senai-dark-card rounded-2xl p-6 border border-gray-200/80 dark:border-senai-dark-border flex flex-col gap-3 shadow-sm hover:border-senai-red transition-all">
+            <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-senai-red-light flex items-center justify-center border border-red-200 dark:border-red-900/40">
+              <span class="material-symbols-outlined text-[26px]">handshake</span>
+            </div>
+            <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">Banco de Vagas Integrado</h3>
+            <p class="text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed">
+              Acesso exclusivo à plataforma de estágios e vagas diretas contratadas por milhares de empresas industriais associadas à FIESP e CIESP.
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-senai-dark-card rounded-2xl p-6 border border-gray-200/80 dark:border-senai-dark-border flex flex-col gap-3 shadow-sm hover:border-senai-red transition-all">
+            <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/40 text-senai-red dark:text-senai-red-light flex items-center justify-center border border-red-200 dark:border-red-900/40">
+              <span class="material-symbols-outlined text-[26px]">badge</span>
+            </div>
+            <h3 class="font-headline text-lg font-bold text-gray-900 dark:text-white">Corpo Docente Especializado</h3>
+            <p class="text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed">
+              Instrutores com vivência ativa de mercado, mestres em engenharias e certificados nos padrões globais da WorldSkills International.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL INTERATIVO: PORTAL DO ALUNO (ÁREA DO ESTUDANTE) -->
+  <!-- ========================================================================= -->
+  <div id="portal-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fade-in" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="bg-white dark:bg-senai-dark-surface w-full max-w-md rounded-3xl shadow-2xl border border-gray-200 dark:border-senai-dark-border overflow-hidden transition-all duration-300">
+      
+      <!-- Topo do Modal com Identidade SENAI -->
+      <div class="bg-gradient-to-r from-senai-red to-senai-red-deep text-white p-6 relative">
+        <button 
+          onclick="closePortalModal()" 
+          class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center transition-all"
+          aria-label="Fechar modal"
+        >
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md">
+            <span class="material-symbols-outlined text-[24px]">school</span>
+          </div>
+          <div>
+            <span class="text-xs uppercase tracking-widest text-white/80 font-bold font-headline">SENAI São Paulo</span>
+            <h3 id="modal-title" class="text-xl font-bold font-headline">Portal do Aluno</h3>
+          </div>
+        </div>
+        <p class="text-xs text-white/90">Acesse suas notas, frequências, Ambiente Virtual (AVA) e serviços da secretaria acadêmica.</p>
+      </div>
+
+      <!-- Formulário de Acesso -->
+      <div class="p-6 flex flex-col gap-4">
+        
+        <!-- Tabs Rápida: Login / Serviços Rápidos -->
+        <div class="flex rounded-xl bg-gray-100 dark:bg-senai-dark-card p-1">
+          <button id="tab-login" onclick="switchPortalTab('login')" class="flex-1 py-1.5 rounded-lg text-xs font-headline font-bold bg-white dark:bg-senai-dark-surface shadow-sm text-gray-900 dark:text-white">
+            Autenticação
+          </button>
+          <button id="tab-servicos" onclick="switchPortalTab('servicos')" class="flex-1 py-1.5 rounded-lg text-xs font-headline font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+            Serviços Rápidos
+          </button>
+        </div>
+
+        <!-- Conteúdo Tab 1: Formulário de Login -->
+        <div id="portal-tab-content-login" class="flex flex-col gap-4">
+          <div id="login-feedback-msg" class="hidden text-xs p-3 rounded-xl transition-all" role="alert"></div>
+
+          <form id="portal-login-form" onsubmit="handlePortalLogin(event)" class="flex flex-col gap-3">
+            <!-- Proteção Anti-Bot Honeypot invisível (Regra 12) -->
+            <input type="text" name="_website_trap" id="student-bot-trap" class="hidden" tabindex="-1" autocomplete="off" style="display:none !important;" />
+            <!-- Timestamp de Renderização para Prevenção de Automação Instantânea (Regra 12) -->
+            <input type="hidden" id="student-render-time" value="" />
+
+            <div>
+              <label for="student-cpf" class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">CPF ou Matrícula / RA</label>
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">person</span>
+                <input 
+                  id="student-cpf" 
+                  type="text" 
+                  required 
+                  maxlength="20"
+                  pattern="[0-9.\-]+"
+                  placeholder="000.000.000-00 ou RA" 
+                  class="w-full h-11 pl-10 pr-3 rounded-xl bg-gray-50 dark:bg-senai-dark-card text-gray-900 dark:text-white text-sm border border-gray-200 dark:border-senai-dark-border focus:ring-2 focus:ring-senai-red focus:outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-1">
+                <label for="student-pass" class="block text-xs font-semibold text-gray-700 dark:text-gray-300">Senha de Acesso</label>
+                <a href="#" onclick="alert('Instruções de recuperação enviadas para o e-mail cadastrado na matrícula.')" class="text-xs text-senai-red dark:text-senai-red-light hover:underline">Esqueceu a senha?</a>
+              </div>
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]">lock</span>
+                <input 
+                  id="student-pass" 
+                  type="password" 
+                  required 
+                  minlength="8"
+                  maxlength="64"
+                  placeholder="••••••••" 
+                  class="w-full h-11 pl-10 pr-3 rounded-xl bg-gray-50 dark:bg-senai-dark-card text-gray-900 dark:text-white text-sm border border-gray-200 dark:border-senai-dark-border focus:ring-2 focus:ring-senai-red focus:outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            <button 
+              id="login-submit-btn"
+              type="submit" 
+              class="w-full h-11 mt-1 rounded-xl bg-senai-red hover:bg-senai-red-deep text-white font-headline text-sm font-bold shadow-md transition-all active:scale-95 flex items-center justify-center gap-2"
+            >
+              <span>Entrar no Portal</span>
+              <span class="material-symbols-outlined text-[18px]">login</span>
+            </button>
+          </form>
+
+          <div class="border-t border-gray-100 dark:border-senai-dark-border pt-3 text-center">
+            <span class="text-xs text-gray-500 dark:text-gray-400">Primeiro acesso? </span>
+            <a href="#" onclick="alert('Informe seu CPF e data de nascimento na secretaria virtual para ativar sua chave de acesso.')" class="text-xs font-bold text-senai-red dark:text-senai-red-light hover:underline">Cadastre sua senha aqui</a>
+          </div>
+        </div>
+
+        <!-- Conteúdo Tab 2: Atalhos de Serviços Acadêmicos -->
+        <div id="portal-tab-content-servicos" class="hidden flex-col gap-2.5">
+          <a href="#" onclick="alert('Redirecionando para o Ambiente Virtual de Aprendizagem Moodle / AVA SENAI-SP.');" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border hover:border-senai-red transition-all">
+            <span class="material-symbols-outlined text-senai-red text-[22px]">laptop_chromebook</span>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-gray-900 dark:text-white">Ambiente Virtual (AVA / Moodle)</span>
+              <span class="text-[11px] text-gray-500 dark:text-gray-400">Aulas virtuais, apostilas e tarefas</span>
+            </div>
+          </a>
+          <a href="#" onclick="alert('Emissão de Atestado de Matrícula online autenticado com QR Code.');" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border hover:border-senai-red transition-all">
+            <span class="material-symbols-outlined text-senai-red text-[22px]">description</span>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-gray-900 dark:text-white">Declaração e Atestado de Matrícula</span>
+              <span class="text-[11px] text-gray-500 dark:text-gray-400">Download imediato com assinatura digital</span>
+            </div>
+          </a>
+          <a href="#" onclick="alert('Carteirinha de Estudante Digital DNE emitida pelo portal.');" class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-senai-dark-card border border-gray-200 dark:border-senai-dark-border hover:border-senai-red transition-all">
+            <span class="material-symbols-outlined text-senai-red text-[22px]">badge</span>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold text-gray-900 dark:text-white">Carteirinha Digital do Aluno</span>
+              <span class="text-[11px] text-gray-500 dark:text-gray-400">Identificação para meia-entrada e transporte</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL DE DETALHES DO CURSO SELECIONADO -->
+  <!-- ========================================================================= -->
+  <div id="course-details-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 animate-fade-in" role="dialog" aria-modal="true">
+    <div class="bg-white dark:bg-senai-dark-surface w-full max-w-lg rounded-3xl shadow-2xl border border-gray-200 dark:border-senai-dark-border overflow-hidden transition-all duration-300 flex flex-col max-h-[90vh]">
+      
+      <div class="bg-senai-graphite-dark text-white p-6 relative border-b border-white/10">
+        <button onclick="closeCourseModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+        <span id="modal-course-badge" class="px-2.5 py-0.5 rounded-full bg-senai-red text-[11px] font-bold uppercase tracking-wider">Técnico</span>
+        <h3 id="modal-course-title" class="text-xl font-extrabold font-headline text-white mt-2">Nome do Curso</h3>
+        <p id="modal-course-duration" class="text-xs text-gray-400 font-code mt-1">Carga Horária: 1.200h</p>
+      </div>
+
+      <div class="p-6 overflow-y-auto flex flex-col gap-4">
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-senai-red dark:text-senai-red-light font-headline">Sobre a Formação</h4>
+          <p id="modal-course-description" class="text-sm text-gray-700 dark:text-gray-300 mt-1.5 leading-relaxed"></p>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-senai-dark-card p-4 rounded-2xl border border-gray-200 dark:border-senai-dark-border">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white font-headline">Pré-requisitos Recomendados</h4>
+          <p id="modal-course-prerequisites" class="text-xs text-gray-600 dark:text-gray-400 mt-1"></p>
+        </div>
+
+        <div class="pt-2 flex items-center gap-3">
+          <button onclick="alert('Inscrição simulada com sucesso! Você será notificado sobre o processo seletivo.'); closeCourseModal();" class="flex-1 h-12 rounded-xl bg-senai-red hover:bg-senai-red-deep text-white font-headline text-sm font-bold shadow-md transition-all">
+            Inscrever-se Agora
+          </button>
+          <button onclick="closeCourseModal()" class="px-4 h-12 rounded-xl border border-gray-300 dark:border-senai-dark-border text-gray-700 dark:text-gray-300 font-headline text-sm font-medium hover:bg-gray-100 dark:hover:bg-senai-dark-card">
+            Fechar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- RODAPÉ INSTITUCIONAL OFICIAL SENAI-SP -->
+  <!-- ========================================================================= -->
+  <footer id="unidades" class="w-full bg-gray-100 dark:bg-[#080a0d] text-gray-800 dark:text-[#f8f9fb] pt-12 pb-14 px-4 sm:px-6 border-t border-gray-200 dark:border-senai-dark-border transition-colors duration-300">
+    <div class="max-w-7xl mx-auto flex flex-col gap-8">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-gray-300 dark:border-white/10 gap-4">
+        <div class="flex flex-col">
+          <span class="font-headline text-2xl text-gray-900 dark:text-white font-black tracking-tight">SENAI São Paulo</span>
+          <span class="font-headline text-[11px] text-gray-500 dark:text-gray-400 tracking-widest uppercase">FIESP • CIESP • SESI • IRS</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1.5 bg-white dark:bg-senai-dark-card text-gray-700 dark:text-gray-300 rounded-lg text-[12px] font-code border border-gray-200 dark:border-senai-dark-border">Redesign Acadêmico 2025</span>
+          <span class="px-3 py-1.5 bg-senai-red/10 text-senai-red dark:text-senai-red-light rounded-lg text-[12px] font-headline font-bold">Estado de São Paulo</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm text-gray-600 dark:text-gray-400">
+        <div class="flex flex-col gap-2.5">
+          <h4 class="font-headline font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider">Cursos & Formação</h4>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#cursos">Cursos Técnicos</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#cursos">Faculdade & Pós-Graduação</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#cursos">Cursos Livres e Rápidos</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#bolsas">Gratuidade Regimental</a>
+        </div>
+        <div class="flex flex-col gap-2.5">
+          <h4 class="font-headline font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider">Institucional</h4>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Portal da Transparência</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Trabalhe Conosco</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Inovação e Tecnologia</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Rede de Escolas no Estado</a>
+        </div>
+        <div class="flex flex-col gap-2.5">
+          <h4 class="font-headline font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider">Para Empresas</h4>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Soluções em Automação 4.0</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Consultorias Tecnológicas</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Laboratórios de Metrologia</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Treinamento In-Company</a>
+        </div>
+        <div class="flex flex-col gap-2.5">
+          <h4 class="font-headline font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider">Atendimento</h4>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Fale Conosco / SAC</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Dúvidas Frequentes (FAQ)</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Ouvidoria Geral</a>
+          <a class="hover:text-senai-red dark:hover:text-white transition-colors" href="#">Termos e Privacidade LGPD</a>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-center justify-between pt-6 border-t border-gray-300 dark:border-white/10 gap-4 text-xs text-gray-500 dark:text-gray-400">
+        <div>
+          <p>© 2025 SENAI-SP - Serviço Nacional de Aprendizagem Industrial. Todos os direitos reservados.</p>
+          <p class="mt-0.5">Av. Paulista, 1313 - Bela Vista, São Paulo - SP, CEP 01311-923</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="font-headline font-bold text-gray-700 dark:text-gray-300">Desenvolvido com tecnologia moderna e IA</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- SCRIPT DE COMPORTAMENTO E LÓGICA FRONT-END -->
+  <!-- ========================================================================= -->
+  <script>
+    // 1. Gerenciamento do Tema Claro / Escuro
+    (function initTheme() {
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeIcon = document.getElementById('theme-icon');
+      const htmlElement = document.documentElement;
+
+      function applyTheme(isDark) {
+        if (isDark) {
+          htmlElement.classList.add('dark');
+          if (themeIcon) {
+            themeIcon.textContent = 'light_mode';
+            themeIcon.className = 'material-symbols-outlined text-[20px] text-amber-400';
+          }
+          if (themeToggleBtn) {
+            themeToggleBtn.setAttribute('aria-label', 'Alternar para tema claro');
+            themeToggleBtn.title = 'Mudar para tema claro';
+          }
+        } else {
+          htmlElement.classList.remove('dark');
+          if (themeIcon) {
+            themeIcon.textContent = 'dark_mode';
+            themeIcon.className = 'material-symbols-outlined text-[20px] text-slate-700';
+          }
+          if (themeToggleBtn) {
+            themeToggleBtn.setAttribute('aria-label', 'Alternar para tema escuro');
+            themeToggleBtn.title = 'Mudar para tema escuro';
+          }
+        }
+      }
+
+      // Detecta preferência salva ou fallback para dark mode (padrão de alta tecnologia do projeto)
+      const storedTheme = localStorage.getItem('senai-sp-theme') || 'dark';
+      applyTheme(storedTheme === 'dark');
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const isDarkNow = htmlElement.classList.contains('dark');
+          const nextTheme = isDarkNow ? 'light' : 'dark';
+          localStorage.setItem('senai-sp-theme', nextTheme);
+          applyTheme(nextTheme === 'dark');
+        });
+      }
+    })();
+
+    // 2. Menu Mobile Expansível
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenuDropdown = document.getElementById('mobile-menu-dropdown');
+    const menuIcon = document.getElementById('menu-icon');
+
+    if (mobileMenuBtn && mobileMenuDropdown) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenuDropdown.classList.contains('hidden');
+        if (isHidden) {
+          mobileMenuDropdown.classList.remove('hidden');
+          menuIcon.textContent = 'close';
+        } else {
+          mobileMenuDropdown.classList.add('hidden');
+          menuIcon.textContent = 'menu';
+        }
+      });
+    }
+
+    // 3. Modal do Portal do Aluno
+    const portalModal = document.getElementById('portal-modal');
+    const openPortalBtn = document.getElementById('open-portal-btn');
+    const renderTimeInput = document.getElementById('student-render-time');
+
+    function openPortalModal() {
+      if (portalModal) {
+        portalModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        if (renderTimeInput) {
+          renderTimeInput.value = Date.now(); // Marca tempo de abertura (Regra 12)
+        }
+      }
+    }
+
+    function closePortalModal() {
+      if (portalModal) {
+        portalModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        const feedback = document.getElementById('login-feedback-msg');
+        if (feedback) feedback.classList.add('hidden');
+      }
+    }
+
+    if (openPortalBtn) {
+      openPortalBtn.addEventListener('click', openPortalModal);
+    }
+
+    // Fechar ao clicar fora da caixa do modal
+    window.addEventListener('click', (e) => {
+      if (e.target === portalModal) {
+        closePortalModal();
+      }
+      const courseModal = document.getElementById('course-details-modal');
+      if (e.target === courseModal) {
+        closeCourseModal();
+      }
+    });
+
+    // Alternar tabs do Portal
+    function switchPortalTab(tab) {
+      const loginContent = document.getElementById('portal-tab-content-login');
+      const servicosContent = document.getElementById('portal-tab-content-servicos');
+      const tabLoginBtn = document.getElementById('tab-login');
+      const tabServicosBtn = document.getElementById('tab-servicos');
+
+      if (tab === 'login') {
+        loginContent.classList.remove('hidden');
+        loginContent.classList.add('flex');
+        servicosContent.classList.add('hidden');
+        servicosContent.classList.remove('flex');
+        tabLoginBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-headline font-bold bg-white dark:bg-senai-dark-surface shadow-sm text-gray-900 dark:text-white';
+        tabServicosBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-headline font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white';
+      } else {
+        loginContent.classList.add('hidden');
+        loginContent.classList.remove('flex');
+        servicosContent.classList.remove('hidden');
+        servicosContent.classList.add('flex');
+        tabServicosBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-headline font-bold bg-white dark:bg-senai-dark-surface shadow-sm text-gray-900 dark:text-white';
+        tabLoginBtn.className = 'flex-1 py-1.5 rounded-lg text-xs font-headline font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white';
+      }
+    }
+
+    // AUTENTICAÇÃO SEGURA SERVER-SIDE (Regras 6, 8, 9, 10, 11, 12, 14, 15, 17)
+    async function handlePortalLogin(e) {
+      e.preventDefault();
+      const feedback = document.getElementById('login-feedback-msg');
+      const submitBtn = document.getElementById('login-submit-btn');
+      const identifier = document.getElementById('student-cpf').value.trim();
+      const password = document.getElementById('student-pass').value;
+      const botTrap = document.getElementById('student-bot-trap').value;
+      const renderTimestamp = parseInt(document.getElementById('student-render-time').value || '0', 10);
+
+      // Limpa e prepara feedback
+      feedback.className = 'text-xs p-3 rounded-xl transition-all';
+      feedback.textContent = 'Autenticando credenciais no servidor seguro...';
+      feedback.classList.remove('hidden');
+      feedback.classList.add('bg-blue-50', 'dark:bg-blue-950/40', 'text-blue-700', 'dark:text-blue-300', 'border', 'border-blue-200', 'dark:border-blue-800');
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            identifier,
+            password,
+            _website_trap: botTrap,
+            render_timestamp: renderTimestamp,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status === 'success') {
+          feedback.className = 'text-xs p-3 rounded-xl transition-all bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800';
+          feedback.textContent = `Acesso autorizado! Bem-vindo(a), ${data.user.fullName}. Redirecionando para a área acadêmica...`;
+          setTimeout(() => {
+            closePortalModal();
+            alert(`Sessão segura iniciada com sucesso para ${data.user.fullName} (Matrícula: ${data.user.registrationCode}).`);
+          }, 1500);
+        } else {
+          feedback.className = 'text-xs p-3 rounded-xl transition-all bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800';
+          feedback.textContent = data.message || (data.details ? data.details.join(', ') : 'Erro ao validar credenciais.');
+        }
+      } catch (err) {
+        feedback.className = 'text-xs p-3 rounded-xl transition-all bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800';
+        feedback.textContent = 'Servidor de autenticação offline ou inacessível no momento. Inicie o backend com: node server.mjs';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    // 4. Filtro Dinâmico de Cursos por Categoria e Busca
+    function filterCourses(category, element) {
+      // Atualiza botões ativos
+      document.querySelectorAll('.course-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-senai-red', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-white', 'dark:bg-senai-dark-card', 'text-gray-700', 'dark:text-gray-300');
+      });
+      if (element) {
+        element.classList.remove('bg-white', 'dark:bg-senai-dark-card', 'text-gray-700', 'dark:text-gray-300');
+        element.classList.add('bg-senai-red', 'text-white', 'shadow-sm');
+      }
+
+      const cards = document.querySelectorAll('.course-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category') || '';
+        if (category === 'todos' || cardCategory.includes(category)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const countElement = document.getElementById('course-count');
+      if (countElement) {
+        countElement.textContent = visibleCount;
+      }
+    }
+
+    // Busca em tempo real no Hero
+    const heroSearchInput = document.getElementById('hero-search-input');
+    if (heroSearchInput) {
+      heroSearchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.course-card');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const title = (card.getAttribute('data-title') || '').toLowerCase();
+          const text = card.textContent.toLowerCase();
+
+          if (title.includes(query) || text.includes(query)) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        const countElement = document.getElementById('course-count');
+        if (countElement) {
+          countElement.textContent = visibleCount;
+        }
+      });
+    }
+
+    // 5. Modal de Detalhes do Curso
+    function showCourseModal(title, duration, badge, description, prerequisites) {
+      document.getElementById('modal-course-title').textContent = title;
+      document.getElementById('modal-course-duration').textContent = `Carga Horária Estimada: ${duration}`;
+      document.getElementById('modal-course-badge').textContent = badge;
+      document.getElementById('modal-course-description').textContent = description;
+      document.getElementById('modal-course-prerequisites').textContent = prerequisites;
+
+      const modal = document.getElementById('course-details-modal');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCourseModal() {
+      const modal = document.getElementById('course-details-modal');
+      modal.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+  </script>
+
+</body>
+</html>
